@@ -22,18 +22,14 @@
         "react"
     ],
     "rules": {
-        "react/jsx-filename-extension": [
-            1,
-            {
-                "extensions": [
-                    ".js",
-                    ".jsx"
-                ]
-            }
-        ],
         "react/react-in-jsx-scope": "off",
-        "no-unused-expressions": "off",
-        "react/jsx-props-no-spreading": "off",
-        "react/jsx-one-expression-per-line": "off"
+        "react/jsx-filename-extension": "off",
+        "react/prop-types": "warn",
+        "react/prefer-stateless-function": "off",
+        "no-unused-vars":"warn",
+        "react/jsx-one-expression-per-line": "off",
+        "jsx-a11y/accessible-emoji": "warn",
+        "jsx-a11y/anchor-is-valid": "warn",
+        "react/jsx-props-no-spreading":"warn"
     }
 }

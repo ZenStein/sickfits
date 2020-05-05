@@ -1,7 +1,11 @@
 # source: https://us1.prisma.sh/christopher-shahin/siccck-fits/dev
-# timestamp: Sun Apr 19 2020 09:43:25 GMT-0700 (Pacific Daylight Time)
+# timestamp: Sun May 03 2020 06:54:31 GMT-0700 (Pacific Daylight Time)
 
 type AggregateItem {
+  count: Int!
+}
+
+type AggregateMyTest {
   count: Int!
 }
 
@@ -428,16 +432,22 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
+  createMyTest(data: MyTestCreateInput!): MyTest!
   createUser(data: UserCreateInput!): User!
   createItem(data: ItemCreateInput!): Item!
+  updateMyTest(data: MyTestUpdateInput!, where: MyTestWhereUniqueInput!): MyTest
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item
+  deleteMyTest(where: MyTestWhereUniqueInput!): MyTest
   deleteUser(where: UserWhereUniqueInput!): User
   deleteItem(where: ItemWhereUniqueInput!): Item
+  upsertMyTest(where: MyTestWhereUniqueInput!, create: MyTestCreateInput!, update: MyTestUpdateInput!): MyTest!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertItem(where: ItemWhereUniqueInput!, create: ItemCreateInput!, update: ItemUpdateInput!): Item!
+  updateManyMyTests(data: MyTestUpdateManyMutationInput!, where: MyTestWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyItems(data: ItemUpdateManyMutationInput!, where: ItemWhereInput): BatchPayload!
+  deleteManyMyTests(where: MyTestWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyItems(where: ItemWhereInput): BatchPayload!
 }
@@ -446,6 +456,189 @@ enum MutationType {
   CREATED
   UPDATED
   DELETED
+}
+
+type MyTest implements Node {
+  id: ID!
+  fuckOff: String
+}
+
+"""A connection to a list of items."""
+type MyTestConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [MyTestEdge]!
+  aggregate: AggregateMyTest!
+}
+
+input MyTestCreateInput {
+  id: ID
+  fuckOff: String
+}
+
+"""An edge in a connection."""
+type MyTestEdge {
+  """The item at the end of the edge."""
+  node: MyTest!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum MyTestOrderByInput {
+  id_ASC
+  id_DESC
+  fuckOff_ASC
+  fuckOff_DESC
+}
+
+type MyTestPreviousValues {
+  id: ID!
+  fuckOff: String
+}
+
+type MyTestSubscriptionPayload {
+  mutation: MutationType!
+  node: MyTest
+  updatedFields: [String!]
+  previousValues: MyTestPreviousValues
+}
+
+input MyTestSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [MyTestSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [MyTestSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [MyTestSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: MyTestWhereInput
+}
+
+input MyTestUpdateInput {
+  fuckOff: String
+}
+
+input MyTestUpdateManyMutationInput {
+  fuckOff: String
+}
+
+input MyTestWhereInput {
+  """Logical AND on all given filters."""
+  AND: [MyTestWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [MyTestWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [MyTestWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  fuckOff: String
+
+  """All values that are not equal to given value."""
+  fuckOff_not: String
+
+  """All values that are contained in given list."""
+  fuckOff_in: [String!]
+
+  """All values that are not contained in given list."""
+  fuckOff_not_in: [String!]
+
+  """All values less than the given value."""
+  fuckOff_lt: String
+
+  """All values less than or equal the given value."""
+  fuckOff_lte: String
+
+  """All values greater than the given value."""
+  fuckOff_gt: String
+
+  """All values greater than or equal the given value."""
+  fuckOff_gte: String
+
+  """All values containing the given string."""
+  fuckOff_contains: String
+
+  """All values not containing the given string."""
+  fuckOff_not_contains: String
+
+  """All values starting with the given string."""
+  fuckOff_starts_with: String
+
+  """All values not starting with the given string."""
+  fuckOff_not_starts_with: String
+
+  """All values ending with the given string."""
+  fuckOff_ends_with: String
+
+  """All values not ending with the given string."""
+  fuckOff_not_ends_with: String
+}
+
+input MyTestWhereUniqueInput {
+  id: ID
 }
 
 """An object with an ID"""
@@ -469,11 +662,23 @@ type PageInfo {
   endCursor: String
 }
 
+enum Permission {
+  ADMIN
+  USER
+  ITEMCREATE
+  ITEMUPDATE
+  ITEMDELETE
+  PERMISSIONUPDATE
+}
+
 type Query {
+  myTests(where: MyTestWhereInput, orderBy: MyTestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MyTest]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item]!
+  myTest(where: MyTestWhereUniqueInput!): MyTest
   user(where: UserWhereUniqueInput!): User
   item(where: ItemWhereUniqueInput!): Item
+  myTestsConnection(where: MyTestWhereInput, orderBy: MyTestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MyTestConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   itemsConnection(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ItemConnection!
 
@@ -485,6 +690,7 @@ type Query {
 }
 
 type Subscription {
+  myTest(where: MyTestSubscriptionWhereInput): MyTestSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
 }
@@ -493,6 +699,10 @@ type User implements Node {
   id: ID!
   name: String!
   email: String!
+  password: String!
+  resetToken: String
+  resetTokenExpiry: String
+  permissions: [Permission!]!
 }
 
 """A connection to a list of items."""
@@ -509,6 +719,14 @@ input UserCreateInput {
   id: ID
   name: String!
   email: String!
+  password: String!
+  resetToken: String
+  resetTokenExpiry: String
+  permissions: UserCreatepermissionsInput
+}
+
+input UserCreatepermissionsInput {
+  set: [Permission!]
 }
 
 """An edge in a connection."""
@@ -527,12 +745,22 @@ enum UserOrderByInput {
   name_DESC
   email_ASC
   email_DESC
+  password_ASC
+  password_DESC
+  resetToken_ASC
+  resetToken_DESC
+  resetTokenExpiry_ASC
+  resetTokenExpiry_DESC
 }
 
 type UserPreviousValues {
   id: ID!
   name: String!
   email: String!
+  password: String!
+  resetToken: String
+  resetTokenExpiry: String
+  permissions: [Permission!]!
 }
 
 type UserSubscriptionPayload {
@@ -577,11 +805,23 @@ input UserSubscriptionWhereInput {
 input UserUpdateInput {
   name: String
   email: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: String
+  permissions: UserUpdatepermissionsInput
 }
 
 input UserUpdateManyMutationInput {
   name: String
   email: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: String
+  permissions: UserUpdatepermissionsInput
+}
+
+input UserUpdatepermissionsInput {
+  set: [Permission!]
 }
 
 input UserWhereInput {
@@ -713,8 +953,129 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   email_not_ends_with: String
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
+  resetToken: String
+
+  """All values that are not equal to given value."""
+  resetToken_not: String
+
+  """All values that are contained in given list."""
+  resetToken_in: [String!]
+
+  """All values that are not contained in given list."""
+  resetToken_not_in: [String!]
+
+  """All values less than the given value."""
+  resetToken_lt: String
+
+  """All values less than or equal the given value."""
+  resetToken_lte: String
+
+  """All values greater than the given value."""
+  resetToken_gt: String
+
+  """All values greater than or equal the given value."""
+  resetToken_gte: String
+
+  """All values containing the given string."""
+  resetToken_contains: String
+
+  """All values not containing the given string."""
+  resetToken_not_contains: String
+
+  """All values starting with the given string."""
+  resetToken_starts_with: String
+
+  """All values not starting with the given string."""
+  resetToken_not_starts_with: String
+
+  """All values ending with the given string."""
+  resetToken_ends_with: String
+
+  """All values not ending with the given string."""
+  resetToken_not_ends_with: String
+  resetTokenExpiry: String
+
+  """All values that are not equal to given value."""
+  resetTokenExpiry_not: String
+
+  """All values that are contained in given list."""
+  resetTokenExpiry_in: [String!]
+
+  """All values that are not contained in given list."""
+  resetTokenExpiry_not_in: [String!]
+
+  """All values less than the given value."""
+  resetTokenExpiry_lt: String
+
+  """All values less than or equal the given value."""
+  resetTokenExpiry_lte: String
+
+  """All values greater than the given value."""
+  resetTokenExpiry_gt: String
+
+  """All values greater than or equal the given value."""
+  resetTokenExpiry_gte: String
+
+  """All values containing the given string."""
+  resetTokenExpiry_contains: String
+
+  """All values not containing the given string."""
+  resetTokenExpiry_not_contains: String
+
+  """All values starting with the given string."""
+  resetTokenExpiry_starts_with: String
+
+  """All values not starting with the given string."""
+  resetTokenExpiry_not_starts_with: String
+
+  """All values ending with the given string."""
+  resetTokenExpiry_ends_with: String
+
+  """All values not ending with the given string."""
+  resetTokenExpiry_not_ends_with: String
 }
 
 input UserWhereUniqueInput {
   id: ID
+  email: String
 }

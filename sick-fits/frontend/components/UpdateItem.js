@@ -1,35 +1,38 @@
 import React, { Component } from 'react';
 import { Mutation, Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import Router from 'next/router';
 import Form from './styles/Form';
 import formatMoney from '../lib/formatMoney';
 import Error from './ErrorMessage';
-import Router from 'next/router';
 
 const SINGLE_ITEM_QUERY = gql`
-    query SINGLE_ITEM_QUERY(id: $id){
-        id
-        title
-        description
-        price
+    query SINGLE_ITEM_QUERY($id: ID!){
+        item(where: {id: $id}){
+            id
+            title
+            description
+            price
+        }
     }
 `;
 const UPDATE_ITEM_MUTATION = gql`
 mutation UPDATE_ITEM_MUTATION(
-    $title: String!
-    $description: String!
-    $price: Int!
-    $largeImage:String
-    $image:String
+    $id: ID!
+    $title: String
+    $description: String
+    $price: Int
 ) {
-    createItem(
+    updateItem(
+    id: $id    
     title: $title
     description: $description
     price: $price
-    largeImage: $largeImage
-    image: $image
     ){
         id
+        title
+        description
+        price
     }
 }
 `;
@@ -44,24 +47,30 @@ export default class CreateItem extends Component {
 
         this.setState({[name]: val});
       }
+      updateItem = async (e, updateItemMutation) => {
+          e.preventDefault()
+          console.log('updating item')
+          console.log("this.state", this.state)
+          const res = await updateItemMutation({
+              variables: {
+                   id: this.props.id,
+                   ...this.state
+              }
+          })
+          console.log(res)
+      }
     render() {
         return (
             <Query query={SINGLE_ITEM_QUERY} variables={{ id: this.props.id }}>
-                {({ data, loading }) => {
+                {({data, loading}) => {
+                    if(!data.item) return <p>no ID found for ID: {this.props.id}</p>
                     if( loading) return <p>Loading...</p>
                     return (
 
             <Mutation mutation={UPDATE_ITEM_MUTATION} variables={this.state}>
-                {(createItem, {loading, error}) => (
+                {(updateItem, {loading, error}) => (
 
-        <Form onSubmit={async (e) => {
-            e.preventDefault();
-            const res = await createItem()
-            Router.push({
-                pathname: '/items',
-                query: {id: res.data.createItem.id}
-            })
-        }}>
+        <Form onSubmit={ e => { this.updateItem(e, updateItem)}}>
                         <Error error={error} />
             <fieldset disabled={loading} aria-busy={loading} >
                             <label htmlFor="title">
@@ -97,12 +106,12 @@ export default class CreateItem extends Component {
                         onChange={this.handleChange}
                         />
                 </label>  
-                <button type="submit">Submit</button>
+                <button type="submit">Sav{loading ? "ing": "e"} Changes</button>
             </fieldset>
         </Form>
                 )}
                 </Mutation>
-                        )
+                     )
                     }}
                 </Query>
                 
