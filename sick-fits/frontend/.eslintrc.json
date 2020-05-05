@@ -10,10 +10,11 @@
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
-    },
+    },"parser": "babel-eslint",
     "parserOptions": {
         "ecmaFeatures": {
-            "jsx": true
+            "jsx": true,
+            "modules": true
         },
         "ecmaVersion": 2018,
         "sourceType": "module"
@@ -30,6 +31,13 @@
         "react/jsx-one-expression-per-line": "off",
         "jsx-a11y/accessible-emoji": "warn",
         "jsx-a11y/anchor-is-valid": "warn",
-        "react/jsx-props-no-spreading":"warn"
+        "react/jsx-props-no-spreading":"warn",
+        "react/button-has-type": "warn",
+        "react/state-in-constructor": "off",
+        "no-restricted-globals": "off",
+        "react/static-property-placement": "off",
+        "react/forbid-prop-types": "off",
+        "no-alert": "off",
+        "react/no-unused-state":"warn"
     }
 }
