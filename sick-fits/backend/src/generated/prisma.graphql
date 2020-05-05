@@ -1,11 +1,15 @@
 # source: https://us1.prisma.sh/christopher-shahin/siccck-fits/dev
-# timestamp: Sun May 03 2020 06:54:31 GMT-0700 (Pacific Daylight Time)
+# timestamp: Tue May 05 2020 11:15:31 GMT-0700 (Pacific Daylight Time)
+
+type AggregateCartItem {
+  count: Int!
+}
 
 type AggregateItem {
   count: Int!
 }
 
-type AggregateMyTest {
+type Aggregatetester {
   count: Int!
 }
 
@@ -16,6 +20,300 @@ type AggregateUser {
 type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
+}
+
+type CartItem implements Node {
+  id: ID!
+  quantity: Int!
+  item: Item!
+  user: User!
+}
+
+"""A connection to a list of items."""
+type CartItemConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CartItemEdge]!
+  aggregate: AggregateCartItem!
+}
+
+input CartItemCreateInput {
+  id: ID
+  quantity: Int
+  item: ItemCreateOneInput!
+  user: UserCreateOneWithoutCartInput!
+}
+
+input CartItemCreateManyWithoutUserInput {
+  create: [CartItemCreateWithoutUserInput!]
+  connect: [CartItemWhereUniqueInput!]
+}
+
+input CartItemCreateWithoutUserInput {
+  id: ID
+  quantity: Int
+  item: ItemCreateOneInput!
+}
+
+"""An edge in a connection."""
+type CartItemEdge {
+  """The item at the end of the edge."""
+  node: CartItem!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CartItemOrderByInput {
+  id_ASC
+  id_DESC
+  quantity_ASC
+  quantity_DESC
+}
+
+type CartItemPreviousValues {
+  id: ID!
+  quantity: Int!
+}
+
+input CartItemScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CartItemScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CartItemScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CartItemScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  quantity: Int
+
+  """All values that are not equal to given value."""
+  quantity_not: Int
+
+  """All values that are contained in given list."""
+  quantity_in: [Int!]
+
+  """All values that are not contained in given list."""
+  quantity_not_in: [Int!]
+
+  """All values less than the given value."""
+  quantity_lt: Int
+
+  """All values less than or equal the given value."""
+  quantity_lte: Int
+
+  """All values greater than the given value."""
+  quantity_gt: Int
+
+  """All values greater than or equal the given value."""
+  quantity_gte: Int
+}
+
+type CartItemSubscriptionPayload {
+  mutation: MutationType!
+  node: CartItem
+  updatedFields: [String!]
+  previousValues: CartItemPreviousValues
+}
+
+input CartItemSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CartItemSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CartItemSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CartItemSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CartItemWhereInput
+}
+
+input CartItemUpdateInput {
+  quantity: Int
+  item: ItemUpdateOneRequiredInput
+  user: UserUpdateOneRequiredWithoutCartInput
+}
+
+input CartItemUpdateManyDataInput {
+  quantity: Int
+}
+
+input CartItemUpdateManyMutationInput {
+  quantity: Int
+}
+
+input CartItemUpdateManyWithoutUserInput {
+  create: [CartItemCreateWithoutUserInput!]
+  connect: [CartItemWhereUniqueInput!]
+  set: [CartItemWhereUniqueInput!]
+  disconnect: [CartItemWhereUniqueInput!]
+  delete: [CartItemWhereUniqueInput!]
+  update: [CartItemUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [CartItemUpdateManyWithWhereNestedInput!]
+  deleteMany: [CartItemScalarWhereInput!]
+  upsert: [CartItemUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input CartItemUpdateManyWithWhereNestedInput {
+  where: CartItemScalarWhereInput!
+  data: CartItemUpdateManyDataInput!
+}
+
+input CartItemUpdateWithoutUserDataInput {
+  quantity: Int
+  item: ItemUpdateOneRequiredInput
+}
+
+input CartItemUpdateWithWhereUniqueWithoutUserInput {
+  where: CartItemWhereUniqueInput!
+  data: CartItemUpdateWithoutUserDataInput!
+}
+
+input CartItemUpsertWithWhereUniqueWithoutUserInput {
+  where: CartItemWhereUniqueInput!
+  update: CartItemUpdateWithoutUserDataInput!
+  create: CartItemCreateWithoutUserInput!
+}
+
+input CartItemWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CartItemWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CartItemWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CartItemWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  quantity: Int
+
+  """All values that are not equal to given value."""
+  quantity_not: Int
+
+  """All values that are contained in given list."""
+  quantity_in: [Int!]
+
+  """All values that are not contained in given list."""
+  quantity_not_in: [Int!]
+
+  """All values less than the given value."""
+  quantity_lt: Int
+
+  """All values less than or equal the given value."""
+  quantity_lte: Int
+
+  """All values greater than the given value."""
+  quantity_gt: Int
+
+  """All values greater than or equal the given value."""
+  quantity_gte: Int
+  item: ItemWhereInput
+  user: UserWhereInput
+}
+
+input CartItemWhereUniqueInput {
+  id: ID
 }
 
 scalar DateTime
@@ -29,6 +327,7 @@ type Item implements Node {
   price: Int!
   createdAt: DateTime!
   updatedAt: DateTime!
+  user: User!
 }
 
 """A connection to a list of items."""
@@ -48,6 +347,12 @@ input ItemCreateInput {
   image: String!
   largeImage: String!
   price: Int!
+  user: UserCreateOneInput!
+}
+
+input ItemCreateOneInput {
+  create: ItemCreateInput
+  connect: ItemWhereUniqueInput
 }
 
 """An edge in a connection."""
@@ -128,12 +433,22 @@ input ItemSubscriptionWhereInput {
   node: ItemWhereInput
 }
 
+input ItemUpdateDataInput {
+  title: String
+  description: String
+  image: String
+  largeImage: String
+  price: Int
+  user: UserUpdateOneRequiredInput
+}
+
 input ItemUpdateInput {
   title: String
   description: String
   image: String
   largeImage: String
   price: Int
+  user: UserUpdateOneRequiredInput
 }
 
 input ItemUpdateManyMutationInput {
@@ -142,6 +457,18 @@ input ItemUpdateManyMutationInput {
   image: String
   largeImage: String
   price: Int
+}
+
+input ItemUpdateOneRequiredInput {
+  create: ItemCreateInput
+  connect: ItemWhereUniqueInput
+  update: ItemUpdateDataInput
+  upsert: ItemUpsertNestedInput
+}
+
+input ItemUpsertNestedInput {
+  update: ItemUpdateDataInput!
+  create: ItemCreateInput!
 }
 
 input ItemWhereInput {
@@ -419,6 +746,7 @@ input ItemWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
+  user: UserWhereInput
 }
 
 input ItemWhereUniqueInput {
@@ -432,24 +760,30 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
-  createMyTest(data: MyTestCreateInput!): MyTest!
-  createUser(data: UserCreateInput!): User!
+  createCartItem(data: CartItemCreateInput!): CartItem!
+  createtester(data: testerCreateInput!): tester!
   createItem(data: ItemCreateInput!): Item!
-  updateMyTest(data: MyTestUpdateInput!, where: MyTestWhereUniqueInput!): MyTest
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  createUser(data: UserCreateInput!): User!
+  updateCartItem(data: CartItemUpdateInput!, where: CartItemWhereUniqueInput!): CartItem
+  updatetester(data: testerUpdateInput!, where: testerWhereUniqueInput!): tester
   updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item
-  deleteMyTest(where: MyTestWhereUniqueInput!): MyTest
-  deleteUser(where: UserWhereUniqueInput!): User
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  deleteCartItem(where: CartItemWhereUniqueInput!): CartItem
+  deletetester(where: testerWhereUniqueInput!): tester
   deleteItem(where: ItemWhereUniqueInput!): Item
-  upsertMyTest(where: MyTestWhereUniqueInput!, create: MyTestCreateInput!, update: MyTestUpdateInput!): MyTest!
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  deleteUser(where: UserWhereUniqueInput!): User
+  upsertCartItem(where: CartItemWhereUniqueInput!, create: CartItemCreateInput!, update: CartItemUpdateInput!): CartItem!
+  upserttester(where: testerWhereUniqueInput!, create: testerCreateInput!, update: testerUpdateInput!): tester!
   upsertItem(where: ItemWhereUniqueInput!, create: ItemCreateInput!, update: ItemUpdateInput!): Item!
-  updateManyMyTests(data: MyTestUpdateManyMutationInput!, where: MyTestWhereInput): BatchPayload!
-  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  updateManyCartItems(data: CartItemUpdateManyMutationInput!, where: CartItemWhereInput): BatchPayload!
+  updateManyTesters(data: testerUpdateManyMutationInput!, where: testerWhereInput): BatchPayload!
   updateManyItems(data: ItemUpdateManyMutationInput!, where: ItemWhereInput): BatchPayload!
-  deleteManyMyTests(where: MyTestWhereInput): BatchPayload!
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  deleteManyCartItems(where: CartItemWhereInput): BatchPayload!
+  deleteManyTesters(where: testerWhereInput): BatchPayload!
   deleteManyItems(where: ItemWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -458,63 +792,121 @@ enum MutationType {
   DELETED
 }
 
-type MyTest implements Node {
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
   id: ID!
-  fuckOff: String
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+enum Permission {
+  ADMIN
+  USER
+  ITEMCREATE
+  ITEMUPDATE
+  ITEMDELETE
+  PERMISSIONUPDATE
+}
+
+type Query {
+  cartItems(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem]!
+  testers(where: testerWhereInput, orderBy: testerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [tester]!
+  items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item]!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  cartItem(where: CartItemWhereUniqueInput!): CartItem
+  tester(where: testerWhereUniqueInput!): tester
+  item(where: ItemWhereUniqueInput!): Item
+  user(where: UserWhereUniqueInput!): User
+  cartItemsConnection(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CartItemConnection!
+  testersConnection(where: testerWhereInput, orderBy: testerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): testerConnection!
+  itemsConnection(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ItemConnection!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+}
+
+type Subscription {
+  cartItem(where: CartItemSubscriptionWhereInput): CartItemSubscriptionPayload
+  tester(where: testerSubscriptionWhereInput): testerSubscriptionPayload
+  item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type tester implements Node {
+  id: ID!
+  name: String!
 }
 
 """A connection to a list of items."""
-type MyTestConnection {
+type testerConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [MyTestEdge]!
-  aggregate: AggregateMyTest!
+  edges: [testerEdge]!
+  aggregate: Aggregatetester!
 }
 
-input MyTestCreateInput {
+input testerCreateInput {
   id: ID
-  fuckOff: String
+  name: String!
 }
 
 """An edge in a connection."""
-type MyTestEdge {
+type testerEdge {
   """The item at the end of the edge."""
-  node: MyTest!
+  node: tester!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-enum MyTestOrderByInput {
+enum testerOrderByInput {
   id_ASC
   id_DESC
-  fuckOff_ASC
-  fuckOff_DESC
+  name_ASC
+  name_DESC
 }
 
-type MyTestPreviousValues {
+type testerPreviousValues {
   id: ID!
-  fuckOff: String
+  name: String!
 }
 
-type MyTestSubscriptionPayload {
+type testerSubscriptionPayload {
   mutation: MutationType!
-  node: MyTest
+  node: tester
   updatedFields: [String!]
-  previousValues: MyTestPreviousValues
+  previousValues: testerPreviousValues
 }
 
-input MyTestSubscriptionWhereInput {
+input testerSubscriptionWhereInput {
   """Logical AND on all given filters."""
-  AND: [MyTestSubscriptionWhereInput!]
+  AND: [testerSubscriptionWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [MyTestSubscriptionWhereInput!]
+  OR: [testerSubscriptionWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [MyTestSubscriptionWhereInput!]
+  NOT: [testerSubscriptionWhereInput!]
 
   """
   The subscription event gets dispatched when it's listed in mutation_in
@@ -535,26 +927,26 @@ input MyTestSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: MyTestWhereInput
+  node: testerWhereInput
 }
 
-input MyTestUpdateInput {
-  fuckOff: String
+input testerUpdateInput {
+  name: String
 }
 
-input MyTestUpdateManyMutationInput {
-  fuckOff: String
+input testerUpdateManyMutationInput {
+  name: String
 }
 
-input MyTestWhereInput {
+input testerWhereInput {
   """Logical AND on all given filters."""
-  AND: [MyTestWhereInput!]
+  AND: [testerWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [MyTestWhereInput!]
+  OR: [testerWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [MyTestWhereInput!]
+  NOT: [testerWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -595,104 +987,50 @@ input MyTestWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  fuckOff: String
+  name: String
 
   """All values that are not equal to given value."""
-  fuckOff_not: String
+  name_not: String
 
   """All values that are contained in given list."""
-  fuckOff_in: [String!]
+  name_in: [String!]
 
   """All values that are not contained in given list."""
-  fuckOff_not_in: [String!]
+  name_not_in: [String!]
 
   """All values less than the given value."""
-  fuckOff_lt: String
+  name_lt: String
 
   """All values less than or equal the given value."""
-  fuckOff_lte: String
+  name_lte: String
 
   """All values greater than the given value."""
-  fuckOff_gt: String
+  name_gt: String
 
   """All values greater than or equal the given value."""
-  fuckOff_gte: String
+  name_gte: String
 
   """All values containing the given string."""
-  fuckOff_contains: String
+  name_contains: String
 
   """All values not containing the given string."""
-  fuckOff_not_contains: String
+  name_not_contains: String
 
   """All values starting with the given string."""
-  fuckOff_starts_with: String
+  name_starts_with: String
 
   """All values not starting with the given string."""
-  fuckOff_not_starts_with: String
+  name_not_starts_with: String
 
   """All values ending with the given string."""
-  fuckOff_ends_with: String
+  name_ends_with: String
 
   """All values not ending with the given string."""
-  fuckOff_not_ends_with: String
+  name_not_ends_with: String
 }
 
-input MyTestWhereUniqueInput {
+input testerWhereUniqueInput {
   id: ID
-}
-
-"""An object with an ID"""
-interface Node {
-  """The id of the object."""
-  id: ID!
-}
-
-"""Information about pagination in a connection."""
-type PageInfo {
-  """When paginating forwards, are there more items?"""
-  hasNextPage: Boolean!
-
-  """When paginating backwards, are there more items?"""
-  hasPreviousPage: Boolean!
-
-  """When paginating backwards, the cursor to continue."""
-  startCursor: String
-
-  """When paginating forwards, the cursor to continue."""
-  endCursor: String
-}
-
-enum Permission {
-  ADMIN
-  USER
-  ITEMCREATE
-  ITEMUPDATE
-  ITEMDELETE
-  PERMISSIONUPDATE
-}
-
-type Query {
-  myTests(where: MyTestWhereInput, orderBy: MyTestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MyTest]!
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item]!
-  myTest(where: MyTestWhereUniqueInput!): MyTest
-  user(where: UserWhereUniqueInput!): User
-  item(where: ItemWhereUniqueInput!): Item
-  myTestsConnection(where: MyTestWhereInput, orderBy: MyTestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MyTestConnection!
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
-  itemsConnection(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ItemConnection!
-
-  """Fetches an object given its ID"""
-  node(
-    """The ID of an object"""
-    id: ID!
-  ): Node
-}
-
-type Subscription {
-  myTest(where: MyTestSubscriptionWhereInput): MyTestSubscriptionPayload
-  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
-  item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
 }
 
 type User implements Node {
@@ -703,6 +1041,7 @@ type User implements Node {
   resetToken: String
   resetTokenExpiry: String
   permissions: [Permission!]!
+  cart(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem!]
 }
 
 """A connection to a list of items."""
@@ -723,10 +1062,31 @@ input UserCreateInput {
   resetToken: String
   resetTokenExpiry: String
   permissions: UserCreatepermissionsInput
+  cart: CartItemCreateManyWithoutUserInput
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutCartInput {
+  create: UserCreateWithoutCartInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreatepermissionsInput {
   set: [Permission!]
+}
+
+input UserCreateWithoutCartInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  resetToken: String
+  resetTokenExpiry: String
+  permissions: UserCreatepermissionsInput
 }
 
 """An edge in a connection."""
@@ -802,6 +1162,16 @@ input UserSubscriptionWhereInput {
   node: UserWhereInput
 }
 
+input UserUpdateDataInput {
+  name: String
+  email: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: String
+  permissions: UserUpdatepermissionsInput
+  cart: CartItemUpdateManyWithoutUserInput
+}
+
 input UserUpdateInput {
   name: String
   email: String
@@ -809,6 +1179,7 @@ input UserUpdateInput {
   resetToken: String
   resetTokenExpiry: String
   permissions: UserUpdatepermissionsInput
+  cart: CartItemUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
@@ -820,8 +1191,41 @@ input UserUpdateManyMutationInput {
   permissions: UserUpdatepermissionsInput
 }
 
+input UserUpdateOneRequiredInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+}
+
+input UserUpdateOneRequiredWithoutCartInput {
+  create: UserCreateWithoutCartInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutCartDataInput
+  upsert: UserUpsertWithoutCartInput
+}
+
 input UserUpdatepermissionsInput {
   set: [Permission!]
+}
+
+input UserUpdateWithoutCartDataInput {
+  name: String
+  email: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: String
+  permissions: UserUpdatepermissionsInput
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
+}
+
+input UserUpsertWithoutCartInput {
+  update: UserUpdateWithoutCartDataInput!
+  create: UserCreateWithoutCartInput!
 }
 
 input UserWhereInput {
@@ -1073,6 +1477,9 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   resetTokenExpiry_not_ends_with: String
+  cart_every: CartItemWhereInput
+  cart_some: CartItemWhereInput
+  cart_none: CartItemWhereInput
 }
 
 input UserWhereUniqueInput {
