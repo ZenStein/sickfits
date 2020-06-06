@@ -38,6 +38,7 @@
         "react/static-property-placement": "off",
         "react/forbid-prop-types": "off",
         "no-alert": "off",
-        "react/no-unused-state":"warn"
+        "react/no-unused-state":"warn",
+        "max-len": "warn"
     }
 }
